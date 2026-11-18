@@ -77,6 +77,42 @@ const luces = Array.from({ length: 22 }, (_, i) => ({
       <path d="M0 330 Q150 300 300 335 V375 H0Z" fill="#f7bcd6" />
     </g>
 
+    <!-- Cine: pantalla, butacas y crispetas -->
+    <g v-else-if="escena === 'cine'">
+      <rect width="300" height="375" fill="#2b1659" />
+      <path d="M0 0 H300 V40 Q150 70 0 40Z" fill="#b45fd6" opacity=".55" />
+      <rect x="40" y="70" width="220" height="125" rx="6" fill="url(#cieloDia)" />
+      <path d="M40 70 L150 195 M260 70 L150 195" stroke="#fff" stroke-width="1" opacity=".35" />
+      <circle v-for="(l, i) in luces.slice(0, 10)" :key="i" class="brilla" :cx="45 + (l.x * 210) / 300" :cy="75 + (l.y * 110) / 160" :r="l.r - 1" :fill="l.c" :style="{ animationDelay: l.d + 's' }" />
+      <g fill="#7c4dd8">
+        <rect v-for="n in 6" :key="'a' + n" :x="n * 46 - 36" y="250" width="38" height="44" rx="12" />
+      </g>
+      <g fill="#5a35a8">
+        <rect v-for="n in 7" :key="'b' + n" :x="n * 44 - 52" y="305" width="38" height="70" rx="12" />
+      </g>
+      <path d="M118 262 h34 l-5 46 h-24z" fill="#fffafd" />
+      <path d="M124 262 v46 M135 262 v46 M146 262 v46" stroke="#e07aab" stroke-width="4" />
+      <g fill="#fff6c9"><circle cx="124" cy="258" r="7" /><circle cx="135" cy="253" r="8" /><circle cx="147" cy="258" r="7" /></g>
+    </g>
+
+    <!-- Cena: mesa con velas y copas -->
+    <g v-else-if="escena === 'cena'">
+      <rect width="300" height="375" fill="url(#cieloNoche)" />
+      <circle v-for="(l, i) in luces" :key="i" class="brilla" :cx="l.x" :cy="l.y * 0.9" :r="l.r - 0.5" :fill="l.c" :style="{ animationDelay: l.d + 's' }" />
+      <path d="M0 250 H300 V375 H0Z" fill="#f3e6f7" />
+      <path d="M0 250 H300" stroke="#e2b866" stroke-width="3" />
+      <ellipse cx="150" cy="300" rx="62" ry="20" fill="#fffafd" stroke="#cdb8f0" stroke-width="3" />
+      <g fill="#fffafd" stroke="#cdb8f0" stroke-width="2">
+        <rect x="104" y="185" width="12" height="65" rx="3" /><rect x="184" y="195" width="12" height="55" rx="3" />
+      </g>
+      <g fill="#ffd9a8" class="brilla"><path d="M110 168 q8 10 0 17 q-8 -7 0 -17z" /><path d="M190 178 q8 10 0 17 q-8 -7 0 -17z" /></g>
+      <g fill="none" stroke="#fffafd" stroke-width="3" stroke-linecap="round">
+        <path d="M60 200 q0 26 16 26 q16 0 16 -26z" /><path d="M76 226 v22 M66 248 h20" />
+        <path d="M208 200 q0 26 16 26 q16 0 16 -26z" /><path d="M224 226 v22 M214 248 h20" />
+      </g>
+      <path d="M62 210 h28 q-2 14 -14 14 q-12 0 -14 -14z M210 210 h28 q-2 14 -14 14 q-12 0 -14 -14z" fill="#b45fd6" />
+    </g>
+
     <!-- Café -->
     <g v-else>
       <rect width="300" height="375" fill="url(#cieloDia)" />

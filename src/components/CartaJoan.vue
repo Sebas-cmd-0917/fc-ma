@@ -13,7 +13,7 @@ defineProps({
     <p class="carta__kicker" v-aparece>Una carta para ti</p>
 
     <article class="carta__papel" v-aparece>
-      <p class="carta__saludo">Querida {{ nombre }},</p>
+      <p class="carta__saludo">{{ nombre }},</p>
       <p v-for="(p, i) in parrafos" :key="i" class="carta__parrafo" :class="{ 'carta__parrafo--final': i === parrafos.length - 1 }">
         {{ p }}
       </p>
