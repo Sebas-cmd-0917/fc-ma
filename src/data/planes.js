@@ -135,7 +135,7 @@ export const planes = [
     titulo: 'Año Nuevo en familia',
     lugar: 'Charalá',
     etiqueta: 'Semana del 31 de diciembre · si te animas',
-    halago: 'Me haría muy feliz empezar el año compartiendo contigo.',
+    halago: 'Qué bonito sería empezar el año entre risas y buena compañía.',
     plan: 'Pasar la semana del 31 con mi familia en Charalá y, de paso, pasear por el pueblito.',
     detalles: ['Recibir el Año Nuevo juntos', 'Caminar por el pueblo y su plaza'],
     foto: 'fotos/charala.webp',
