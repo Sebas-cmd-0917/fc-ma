@@ -1,0 +1,9 @@
+{
+  "name": "Para ti",
+  "short_name": "Para ti",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3eaff",
+  "theme_color": "#f3eaff",
+  "icons": [{ "src": "icono.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

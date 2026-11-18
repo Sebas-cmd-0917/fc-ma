@@ -1,0 +1,86 @@
+/* Tokens definidos en .claude/skills/ui-manifesto */
+:root {
+  --fondo: #f3eaff;        /* lavanda princesa */
+  --fondo-2: #fdf9ff;      /* tarjetas */
+  --fondo-3: #e8dcfc;      /* lila claro: rellenos */
+  --texto: #3a1d68;        /* violeta real */
+  --texto-suave: #6e5896;
+  --rosa-pastel: #f4c6e4;  /* rosa princesa */
+  --rosa-fuerte: #b45fd6;  /* orquídea: números grandes, énfasis */
+  --lila: #c7b0f5;         /* lila pastel: bordes */
+  --violeta: #7c4dd8;      /* violeta: botones, detalles */
+  --oro: #e2b866;          /* dorado de corona: solo destellos */
+  --brillo: linear-gradient(120deg, #7c4dd8, #b45fd6 55%, #d48be0);
+
+  --f-display: 'Fraunces', Georgia, serif;
+  --f-texto: 'DM Sans', system-ui, sans-serif;
+  --f-script: 'Great Vibes', 'Snell Roundhand', cursive;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --gutter: clamp(1rem, 5vw, 1.5rem);
+
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font: 400 1.0625rem/1.55 var(--f-texto);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+}
+
+/* En escritorio: la misma columna móvil sobre un fondo ambiental */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60vmax 50vmax at 85% -10%, #f2cdee 0%, transparent 60%),
+    radial-gradient(50vmax 40vmax at -10% 110%, #d6c2fb 0%, transparent 60%),
+    radial-gradient(1.5px 1.5px at 20% 30%, #fff 50%, transparent 51%) 0 0 / 90px 90px,
+    radial-gradient(1.5px 1.5px at 70% 80%, #e2b866 50%, transparent 51%) 0 0 / 130px 130px,
+    var(--fondo);
+}
+
+#app {
+  max-width: 480px;
+  margin-inline: auto;
+  overflow-x: clip;
+  min-height: 100dvh;
+}
+
+img { display: block; max-width: 100%; }
+
+button { font: inherit; color: inherit; }
+
+:focus-visible { outline: 2px solid var(--violeta); outline-offset: 3px; }
+
+.aparece {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+}
+.aparece.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .aparece { opacity: 1; transform: none; }
+}
+
+/* Destello tipo estrella de cuatro puntas */
+.estrella {
+  display: inline-block;
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}
+.script { font-family: var(--f-script); font-weight: 400; font-style: normal; letter-spacing: 0; }
