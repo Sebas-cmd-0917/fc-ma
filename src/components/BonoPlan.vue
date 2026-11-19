@@ -4,6 +4,7 @@ import { dos } from '../composables/tiempo.js'
 import { vAparece } from '../composables/vAparece.js'
 import PortadaLugar from './PortadaLugar.vue'
 import Corona from './Corona.vue'
+import RecuerdosBono from './RecuerdosBono.vue'
 
 const props = defineProps({
   plan: { type: Object, required: true },
@@ -84,6 +85,13 @@ function canjear() {
         </button>
         <a v-else class="bp__reenviar" :href="enlace" target="_blank" rel="noopener">Ya lo canjeaste · volver a avisarle</a>
         <p class="bp__vigencia">Válido {{ vigencia }} · tú escoges el día</p>
+
+        <RecuerdosBono
+          v-if="!agotado"
+          :grupo="`plan-${plan.id}`"
+          :lugar="plan.lugar"
+          :invitacion="canjeado ? 'Cuando lo vivamos, guarda aquí las fotos de ese día' : 'Guarda aquí las fotos de este plan'"
+        />
       </div>
     </article>
   </li>

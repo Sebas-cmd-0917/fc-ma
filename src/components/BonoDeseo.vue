@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { vAparece } from '../composables/vAparece.js'
+import RecuerdosBono from './RecuerdosBono.vue'
 
 const props = defineProps({
   bono: { type: Object, required: true },
@@ -56,6 +57,7 @@ function canjear() {
         <p class="bono__estado">Deseo canjeado ✨</p>
         <p class="bono__deseo">“{{ guardado.texto }}”</p>
         <a class="bono__reenviar" :href="enlace" target="_blank" rel="noopener">Volver a enviarlo</a>
+        <RecuerdosBono grupo="deseo" lugar="Tu deseo" invitacion="Cuando se cumpla, guarda aquí las fotos" />
       </div>
 
       <dl class="bono__datos">
