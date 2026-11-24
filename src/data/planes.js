@@ -42,6 +42,8 @@ export const bono = {
   valido: 'Lo que más quieras hacer, probar o conocer en Bucaramanga. Tú lo pides y yo lo hago realidad.',
   vigencia: '10 dic 2026 – 14 ene 2027',
   codigo: 'MARI·25',
+  // Deseo que Mari ya canjeó por WhatsApp (23 nov 2026). Se muestra como canjeado.
+  deseoCanjeado: 'Buongiornooo, quiero ir a comer carne oreada yendo para el Santísimo y después bajamos a comer Olea. ¿Es mucho pedir?',
 }
 
 // Bonos de planes en Bucaramanga. No tienen fecha: ella escoge cuáles quiere
@@ -53,6 +55,12 @@ export const bono = {
 // `etiqueta` (opcional) cambia el texto pequeño de arriba del título.
 export const vigenciaPlanes = '10 dic 2026 – 14 ene 2027'
 export const maxBonos = 5
+
+// Bonos que Mari ya canjeó por WhatsApp (por `id`). Salen como canjeados en
+// cualquier celular y cuentan en el límite de `maxBonos`.
+// 23 nov 2026: N.º 01 Mesa de los Santos (5), N.º 04 Guanabanazo (4),
+// N.º 06 Tú escoges el lugar (15).
+export const canjesConfirmados = [5, 4, 15]
 
 export const planes = [
   {

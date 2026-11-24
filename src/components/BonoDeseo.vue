@@ -11,7 +11,7 @@ const props = defineProps({
 
 const CLAVE = 'mari-deseo'
 const leer = () => { try { return JSON.parse(localStorage.getItem(CLAVE) || 'null') } catch { return null } }
-const guardado = ref(leer())
+const guardado = ref(props.bono.deseoCanjeado ? { texto: props.bono.deseoCanjeado } : leer())
 const deseo = ref(guardado.value?.texto || '')
 
 const enlace = computed(() => {

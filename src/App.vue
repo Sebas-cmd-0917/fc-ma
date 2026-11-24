@@ -6,7 +6,7 @@ import HeroCumple from './components/HeroCumple.vue'
 import CartaJoan from './components/CartaJoan.vue'
 import BonoDeseo from './components/BonoDeseo.vue'
 import BonoPlan from './components/BonoPlan.vue'
-import { config, carta, bono, planes, vigenciaPlanes, maxBonos } from './data/planes.js'
+import { config, carta, bono, planes, vigenciaPlanes, maxBonos, canjesConfirmados } from './data/planes.js'
 import { useReloj } from './composables/tiempo.js'
 import { vAparece } from './composables/vAparece.js'
 
@@ -34,7 +34,7 @@ const etapa = computed(() => {
 // ---- Bonos de planes (sin fechas: ella escoge y canjea) ----
 const CANJE_LS = 'mari-bonos-canjeados'
 const leerCanjes = () => { try { return JSON.parse(localStorage.getItem(CANJE_LS) || '[]') } catch { return [] } }
-const canjeados = ref(vistaJoan || simulado ? [] : leerCanjes())
+const canjeados = ref([...new Set([...canjesConfirmados, ...(vistaJoan || simulado ? [] : leerCanjes())])])
 // Solo cuentan los bonos que siguen en la lista (por si Joan quita alguno)
 const usados = computed(() => canjeados.value.filter((id) => planes.some((p) => p.id === id)).length)
 const quedan = computed(() => Math.max(0, maxBonos - usados.value))
