@@ -5,12 +5,10 @@ import { vAparece } from '../composables/vAparece.js'
 import VisorRecuerdos from './VisorRecuerdos.vue'
 
 // Calendario de recuerdos: cada foto aparece en el día que ella escogió.
-// Siempre muestra diciembre y enero (cuando ella está en Bucaramanga) y
-// agrega cualquier otro mes que tenga fotos.
-const props = defineProps({
+// No hay fechas fijas: solo salen los meses que tienen fotos (sin fotos,
+// se muestra el mes actual vacío como adelanto).
+defineProps({
   etiquetas: { type: Object, required: true }, // grupo → nombre del lugar
-  desde: { type: String, default: '2026-12-10' },
-  hasta: { type: String, default: '2027-01-14' },
 })
 
 const grupos = usarRecuerdos()
@@ -28,11 +26,15 @@ const nombreMes = (a, m) => new Date(a, m, 1).toLocaleDateString('es-CO', { mont
 const clave = (a, m, d) => `${a}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
 
 const meses = computed(() => {
-  // claves AAAA-MM con el mes desde 0: '2026-11' = diciembre, '2027-00' = enero
-  const set = new Set(['2026-11', '2027-00'])
+  // claves AAAA-MM con el mes desde 0 (enero = 00)
+  const set = new Set()
   for (const dia of Object.keys(porDia.value)) {
     const [a, m] = dia.split('-').map(Number)
     set.add(`${a}-${String(m - 1).padStart(2, '0')}`)
+  }
+  if (!set.size) {
+    const h = new Date()
+    set.add(`${h.getFullYear()}-${String(h.getMonth()).padStart(2, '0')}`)
   }
   return [...set].sort().map((k) => {
     const [a, m] = k.split('-').map(Number)
@@ -41,7 +43,7 @@ const meses = computed(() => {
     const dias = Array.from({ length: total }, (_, i) => {
       const id = clave(a, m, i + 1)
       const fotos = porDia.value[id] || []
-      return { n: i + 1, id, fotos, estadia: id >= props.desde && id <= props.hasta }
+      return { n: i + 1, id, fotos }
     })
     return { k, anio: a, nombre: nombreMes(a, m), primero, dias, cuantas: dias.reduce((s, d) => s + d.fotos.length, 0) }
   })
@@ -57,7 +59,7 @@ const tituloDia = computed(() =>
 <template>
   <section id="recuerdos" class="cal">
     <header class="cal__cabeza" v-aparece>
-      <p class="cal__kicker">Diciembre y enero</p>
+      <p class="cal__kicker">Día por día</p>
       <h2 class="cal__titulo">Nuestro<br /><em>calendario</em></h2>
       <p class="cal__intro">
         <template v-if="todas.length">{{ todas.length }} {{ todas.length === 1 ? 'recuerdo guardado' : 'recuerdos guardados' }}. Toca un día para verlos.</template>
@@ -83,12 +85,10 @@ const tituloDia = computed(() =>
             <span class="cal__n">{{ dia.n }}</span>
             <span v-if="dia.fotos.length > 1" class="cal__mas">{{ dia.fotos.length }}</span>
           </button>
-          <span v-else class="cal__dia" :class="{ 'cal__dia--estadia': dia.estadia }">{{ dia.n }}</span>
+          <span v-else class="cal__dia">{{ dia.n }}</span>
         </li>
       </ol>
     </article>
-
-    <p class="cal__leyenda" v-aparece><span class="cal__punto" aria-hidden="true" /> Los días que estás en Bucaramanga</p>
 
     <VisorRecuerdos
       v-if="abierto && fotosDia.length"
@@ -162,9 +162,9 @@ const tituloDia = computed(() =>
   border-radius: 8px 3px 8px 8px;
   font-size: .8rem;
   color: var(--texto-suave);
-  opacity: .55;
+  background: var(--fondo-3);
+  opacity: .7;
 }
-.cal__dia--estadia { opacity: 1; background: var(--fondo-3); color: var(--texto); font-weight: 500; }
 .cal__dia--foto {
   padding: 2px;
   border: 0;
@@ -205,6 +205,4 @@ li:nth-child(even) > .cal__dia--foto { transform: rotate(3deg) scale(1.08); }
   font-size: .65rem;
   font-weight: 700;
 }
-.cal__leyenda { grid-column: 1 / -1; display: flex; align-items: center; gap: .5rem; margin: -.8rem 0 0; font-size: .78rem; color: var(--texto-suave); }
-.cal__punto { width: 14px; height: 16px; border-radius: 4px 1px 4px 4px; background: var(--fondo-3); }
 </style>
