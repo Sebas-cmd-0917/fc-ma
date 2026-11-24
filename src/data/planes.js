@@ -60,7 +60,8 @@ export const maxBonos = 5
 // cualquier celular y cuentan en el límite de `maxBonos`.
 // 23 nov 2026: N.º 01 Mesa de los Santos (5), N.º 04 Guanabanazo (4),
 // N.º 06 Tú escoges el lugar (15).
-export const canjesConfirmados = [5, 4, 15]
+// 24 nov 2026: N.º 03 Alumbrados (2), N.º 09 Barichara (3).
+export const canjesConfirmados = [5, 4, 15, 2, 3]
 
 export const planes = [
   {
