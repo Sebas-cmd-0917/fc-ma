@@ -6,6 +6,7 @@ import HeroCumple from './components/HeroCumple.vue'
 import CartaJoan from './components/CartaJoan.vue'
 import BonoDeseo from './components/BonoDeseo.vue'
 import BonoPlan from './components/BonoPlan.vue'
+import CalendarioRecuerdos from './components/CalendarioRecuerdos.vue'
 import { config, carta, bono, planes, vigenciaPlanes, maxBonos, canjesConfirmados } from './data/planes.js'
 import { useReloj } from './composables/tiempo.js'
 import { vAparece } from './composables/vAparece.js'
@@ -30,6 +31,9 @@ const etapa = computed(() => {
   if (ahora.value < new Date(config.apertura)) return 'cuenta'
   return cartaAbierta.value ? 'contenido' : 'clave'
 })
+
+// Nombre de cada grupo de recuerdos (para el calendario)
+const etiquetas = Object.fromEntries([['deseo', 'Tu deseo'], ...planes.map((p) => [`plan-${p.id}`, p.lugar])])
 
 // ---- Bonos de planes (sin fechas: ella escoge y canjea) ----
 const CANJE_LS = 'mari-bonos-canjeados'
@@ -87,6 +91,8 @@ function canjear(id) {
             @canjear="canjear"
           />
         </ol>
+
+        <CalendarioRecuerdos :etiquetas="etiquetas" />
 
         <footer class="planes__pie" v-aparece>
           <p>Feliz cumpleaños número {{ config.edad }}.</p>

@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { FILTROS, cargarImagen, exportar, limites, pintar } from '../composables/editarFoto.js'
+import { hoy } from '../composables/recuerdos.js'
 
 const props = defineProps({
   archivo: { type: File, required: true },
@@ -15,6 +16,7 @@ const fuente = ref(null)
 const error = ref(false)
 const guardando = ref(false)
 const texto = ref('')
+const dia = ref(hoy())
 const estado = reactive({ giro: 0, zoom: 1, dx: 0, dy: 0, filtro: 'natural' })
 
 // ---- Pintado (un cuadro por frame como máximo) ----
@@ -107,7 +109,7 @@ async function guardar() {
   guardando.value = true
   try {
     const blob = await exportar(fuente.value, estado)
-    emit('guardar', { blob, texto: texto.value, filtro: estado.filtro })
+    emit('guardar', { blob, texto: texto.value, filtro: estado.filtro, dia: dia.value || hoy() })
   } finally {
     guardando.value = false
   }
@@ -180,6 +182,11 @@ const zoomTexto = computed(() => `${Math.round(estado.zoom * 100)} %`)
         <label class="ed__texto">
           <span>Un pie de foto</span>
           <input v-model="texto" type="text" maxlength="70" placeholder="Ej: el mejor postre de mi vida" enterkeyhint="done" @keydown.enter="$event.target.blur()" />
+        </label>
+
+        <label class="ed__texto ed__dia">
+          <span>¿Qué día fue?</span>
+          <input v-model="dia" type="date" min="2026-11-19" />
         </label>
 
         <button v-if="pendientes" type="button" class="ed__saltar" @click="emit('saltar')">
@@ -396,6 +403,7 @@ const zoomTexto = computed(() => `${Math.round(estado.zoom * 100)} %`)
   font: 400 1rem var(--f-texto);
   outline: none;
 }
+.ed__dia { grid-column: 1 / 5; margin-top: .9rem; }
 .ed__texto input:focus { border-color: var(--violeta); box-shadow: 0 0 0 4px rgba(124, 77, 216, .15); }
 
 .ed__saltar {
